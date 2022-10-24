@@ -15,10 +15,11 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle("Cats example")
-    .setDescription("The cats API description")
+    .setTitle("RSSB Coding test")
+    .setDescription("Coding test API")
     .setVersion("1.0")
-    .addTag("cats")
+    .addTag("RSSB")
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("/", app, document);

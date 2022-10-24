@@ -15,11 +15,7 @@ import { AuthModule } from "./modules/auth/auth.module";
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConnectionService,
     }),
-    PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: "60000s" },
-    }),
+
     AuthModule,
     RecordModule,
   ],

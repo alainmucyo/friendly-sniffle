@@ -19,7 +19,7 @@ import { LoginDto } from "./dto/login.dto";
 import { Roles } from "./model/role.model";
 import { AuthService } from "../auth.service";
 
-@ApiTags("user management")
+@ApiTags("User management")
 @Controller({ version: "1", path: "/users" })
 export class UserController {
   constructor(
@@ -32,20 +32,6 @@ export class UserController {
       delete u.password;
       return u;
     });
-  }
-
-  @ApiBearerAuth()
-  @Get()
-  @UseGuards(AuthGuard("jwt"))
-  @UseInterceptors(ClassSerializerInterceptor)
-  async users(@Request() request) {
-    const user: User = request.user;
-    if (user.role != Roles.Admin)
-      throw new ForbiddenException("Not allowed to access");
-
-    const users = await this.userService.findAll();
-
-    return UserController.toResponse(users);
   }
 
   @Post("/register")
@@ -65,6 +51,20 @@ export class UserController {
 
     const { user: createdUser } = await this.authService.register(user);
     return createdUser;
+  }
+
+  @Get()
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard("jwt"))
+  @UseInterceptors(ClassSerializerInterceptor)
+  async users(@Request() request) {
+    const user: User = request.user;
+    if (user.role != Roles.Admin)
+      throw new ForbiddenException("Not allowed to access");
+
+    const users = await this.userService.findAll();
+
+    return UserController.toResponse(users);
   }
 
   @Post("/login")

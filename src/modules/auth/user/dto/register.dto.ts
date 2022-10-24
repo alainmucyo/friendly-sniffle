@@ -26,11 +26,6 @@ export class RegisterDto {
   @IsNotEmpty()
   @IsString()
   @MinLength(6)
-  @MaxLength(20)
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message:
-      "Password needs to contain a capital letter, a number and a special character",
-  })
   @ApiProperty()
   password: string;
 }

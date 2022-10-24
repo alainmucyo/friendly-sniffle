@@ -5,17 +5,18 @@ import {
   ParseFilePipe,
   Post,
   Query,
-  UploadedFile,
-  UseInterceptors,
+  UploadedFile, UseGuards,
+  UseInterceptors
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { ApiBody, ApiConsumes, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Worker } from "worker_threads";
 import { workerThreadFilePath } from "../../../workerThreads/config";
 import { RecordService } from "../services/record.service";
 import { CommandBus } from "@nestjs/cqrs";
 import { CommitRecordCommand } from "../commands/implementation/commit-record.command";
 import { RecordsTypesEnum } from "../enums/records-types.enum";
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller({ path: "/records", version: "1" })
 @ApiTags("Records")
@@ -27,6 +28,8 @@ export class RecordController {
 
   // Uploads excel file
   @Post("upload")
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard("jwt"))
   @UseInterceptors(FileInterceptor("file"))
   @ApiConsumes("multipart/form-data")
   @ApiBody({
@@ -72,6 +75,8 @@ export class RecordController {
   }
 
   @Get("/cached")
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard("jwt"))
   @ApiQuery({ required: false, name: "pageNumber" })
   @ApiQuery({ required: false, name: "pageSize" })
   findCached(
@@ -82,6 +87,8 @@ export class RecordController {
   }
 
   @Post("/commit")
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard("jwt"))
   @ApiQuery({ required: false, name: "errorFree", example: false })
   async commitToDB(@Query("errorFree") errorFree?: boolean) {
     await this.commandBus.execute(
