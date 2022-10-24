@@ -53,7 +53,7 @@ The instructions below work on both services.
 
 Just call this endpoint: `http://localhost:3000/` using a GET method It will show a `hello world` response.
 
-#### Find `SWAGGER` the API docs on account service `/api-docs` to get all API available
+# Find `SWAGGER`  API docs at `/api-docs`.
 
 ## Testing
 
