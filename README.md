@@ -6,7 +6,6 @@ It also has user authentication and registration. This project was built as a co
 ---
 
 ## Getting Started
-The project contains two folders(services) both built with Nestjs. Make sure you have both folders.
 1. git clone this repository & cd to the project directory
 
 ## Pre-requisites
