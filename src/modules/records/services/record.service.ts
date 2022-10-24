@@ -6,7 +6,6 @@ import {
 import { RecordDto } from "../dtos/record.dto";
 import { RedisHelper } from "../../../helpers/redis-helper";
 import { RecordEntity } from "../entities/record.entity";
-import { RecordsTypesEnum } from "../enums/records-types.enum";
 
 @Injectable()
 export class RecordService {
@@ -19,18 +18,22 @@ export class RecordService {
     await this.redis.set(this.REDIS_KEY, records, this.TTL);
   }
 
-  async getCachedRecords(pageSize: number, pageNumber: number) {
+  // Returns all cached records
+  async getCachedRecords(
+    pageSize: number,
+    pageNumber: number,
+  ): Promise<RecordDto[]> {
     const records: RecordDto[] = await this.redis.get(this.REDIS_KEY);
-    if (!records) throw new NotFoundException("No cached records available");
+    if (!records) return [];
     return records.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
   }
 
   // Saves cached record to DB
-  async saveCachedRecordsToDB(type: RecordsTypesEnum) {
+  async saveCachedRecordsToDB(errorFree: boolean) {
     const records: RecordDto[] = await this.redis.get(this.REDIS_KEY);
     if (!records) throw new BadRequestException("No cached records available");
     for (const r of records) {
-      if (type == RecordsTypesEnum.ErrorFree && r.errors.length > 0) continue;
+      if (errorFree && r.errors.length > 0) continue;
       const record = new RecordEntity();
       record.nid = r.nid;
       record.phoneNumber = r.phoneNumber;
@@ -40,6 +43,39 @@ export class RecordService {
       record.errors = r.errors;
       await record.save();
     }
+
+    // Deletes the cache
     this.redis.del(this.REDIS_KEY);
+  }
+
+  async cachedRecordsExists(): Promise<boolean> {
+    const exists = await this.redis.exists(this.REDIS_KEY);
+    // Returns true if exists is one and false if not equal 1
+    return exists == 1;
+  }
+
+  // Finds all records from the database with pagination
+  async findAllFromDB(pageSize: number, pageNumber: number): Promise<any> {
+    const take = pageSize || 10;
+    const page = Number(pageNumber) || 1;
+    const skip = (page - 1) * take;
+    const [list, total] = await RecordEntity.findAndCount({
+      order: {
+        createdAt: "DESC",
+      },
+      take,
+      skip,
+    });
+    const lastPage = Math.ceil(total / take);
+    const nextPage = page + 1 > lastPage ? null : page + 1;
+    const prevPage = page - 1 < 1 ? null : page - 1;
+    return {
+      list,
+      prevPage,
+      nextPage,
+      lastPage,
+      currentPage: page,
+      totalRecords: total,
+    };
   }
 }

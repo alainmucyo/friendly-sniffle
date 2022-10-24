@@ -9,6 +9,7 @@ async function run() {
 
   const file: Express.Multer.File = workerData;
   const res = uploadService.uploadFile(file);
+  // Sends a message once the file is uploaded and processed
   parentPort.postMessage(res);
 }
 

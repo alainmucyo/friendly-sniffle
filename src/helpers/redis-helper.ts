@@ -21,7 +21,7 @@ export class RedisHelper {
   }
 
   async set(key: string, value: any, ttl?: number) {
-    // The key should only last for 5 minutes
+    // The key should only last for 5 minutes if not ttl provided
     await this.client.set(
       `${this.appName}-${key}`,
       JSON.stringify(value),
@@ -32,6 +32,9 @@ export class RedisHelper {
 
   async get(key: string) {
     return JSON.parse(await this.client.get(`${this.appName}-${key}`));
+  }
+  async exists(key: string) {
+    return await this.client.exists(`${this.appName}-${key}`);
   }
 
   async del(key: string) {

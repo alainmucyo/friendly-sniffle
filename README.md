@@ -1,73 +1,75 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# File handler
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+File handler API received HTTP requests Excel file which contains dummy user data, extracts data from it and saves them.
+It also has user authentication and registration. This project was built as a coding test. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Getting Started
+The project contains two folders(services) both built with Nestjs. Make sure you have both folders.
+1. git clone this repository & cd to the project directory
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Pre-requisites
 
-## Installation
+* Nodejs v14 or greater
+* Git
+* VSCode, Webstorm or even any other code editor of your preferred choice.
+* PostgreSQL
+* Redis
 
-```bash
-$ npm install
-```
+## Installing
 
-## Running the app
+* Install [Nodejs](https://nodejs.org/en/) if you don't have it installed.
 
-```bash
-# development
-$ npm run start
+* Install [git](https://www.digitalocean.com/community/tutorials/how-to-contribute-to-open-source-getting-started-with-git)
+  , (optional) if you dont have it installed.
 
-# watch mode
-$ npm run start:dev
+* Install [PostgreSQL](https://www.postgresql.org)
 
-# production mode
-$ npm run start:prod
-```
+## Run the project
 
-## Test
+#### Using VSCode
+The instructions below work on both services.
+1. Launch VSCode editor,
+2. Make copy of `.env.example` to `.env`,
+3. Set up `REDIS_URL` in `.env` file,
+4. Setup your PostgreSQL database credentials in .env,
+5. You can set the `PORT` you want to use in the `.env` file, if you don't set it, it will run on `3000` by default.
+6. Congratulations! You have successfully launched file handler app!
+7. You can register and use users.xlsx file provided to test file uploading
 
-```bash
-# unit tests
-$ npm run test
+### Launch with Docker
 
-# e2e tests
-$ npm run test:e2e
+> For this, you need to have [Docker](https://www.docker.com/) installed in your system.
 
-# test coverage
-$ npm run test:cov
-```
+1. Make copy of `.env.example` to `.env`,
+2. Set up `REDIS_URL` in `.env` file,
+3. Setup your PostgreSQL database credentials in .env,
+4. Run `docker build -t <image-name> .` to build the docker image
+5. Run `docker run -p 3000:3000 <image-name>` to run the image. This will expose port `3000`
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### To check if the API is up and running.
 
-## Stay in touch
+Just call this endpoint: `http://localhost:3000/` using a GET method It will show a `hello world` response.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+#### Find `SWAGGER` the API docs on account service `/api-docs` to get all API available
 
-## License
+## Testing
 
-Nest is [MIT licensed](LICENSE).
+Run `npm test`
+
+## Built With
+
+* [Nestjs](https://nestjs.com/)
+* [Typeorm](https://typeorm.io)
+
+
+## Authors
+
+* **Alain MUCYO** (https://github.com/alainmucyo)
+
+## Licence
+
+This software is published under the [MIT licence](http://opensource.org/licenses/MIT).
+

@@ -8,6 +8,6 @@ export class CommitRecordsEventHandler
 {
   constructor(private readonly record: RecordService) {}
   async handle(event: CommitRecordEvent) {
-    await this.record.saveCachedRecordsToDB(event.type);
+    await this.record.saveCachedRecordsToDB(event.errorFree);
   }
 }

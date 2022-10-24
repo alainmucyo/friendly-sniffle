@@ -10,6 +10,8 @@ export class UploadService {
     const data: RecordDto[] = [];
 
     const sheets = workbook.SheetNames;
+
+    // Loops through available Excel sheets
     for (let i = 0; i < sheets.length; i++) {
       const temp = utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[i]]);
       temp.forEach((res: any) => {
@@ -21,8 +23,11 @@ export class UploadService {
         record.nid = res.nid;
         record.gender = res.gender.toLowerCase();
         record.errors = [];
+
+        // Validates record using defined validations in RecordDTO
         const errors = validateSync(record);
         if (errors.length > 0) {
+          // Gets errors values from a JS object
           record.errors = errors.map((e) => Object.values(e.constraints)[0]);
         }
         data.push(record);

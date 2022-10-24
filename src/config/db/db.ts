@@ -9,7 +9,7 @@ export class DatabaseConnectionService implements TypeOrmOptionsFactory {
   ): Promise<TypeOrmModuleOptions> | TypeOrmModuleOptions {
     return {
       name: "default",
-      type: "postgres",
+      type: "postgres", // you can change it to any db type you want. You just need to install the connector
       host: process.env.DATABASE_HOST,
       port: Number(process.env.DATABASE_PORT),
       username: process.env.DATABASE_USER,

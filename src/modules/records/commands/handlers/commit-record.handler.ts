@@ -9,6 +9,6 @@ export class CommitRecordHandler
   constructor(private readonly eventBus: EventBus) {}
 
   async execute(command: CommitRecordCommand): Promise<any> {
-    await this.eventBus.publish(new CommitRecordEvent(command.type));
+    await this.eventBus.publish(new CommitRecordEvent(command.errorFree));
   }
 }
