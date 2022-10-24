@@ -36,7 +36,7 @@ The instructions below work on both services.
 4. Setup your PostgreSQL database credentials in .env,
 5. You can set the `PORT` you want to use in the `.env` file, if you don't set it, it will run on `3000` by default.
 6. Congratulations! You have successfully launched file handler app!
-7. You can register and use users.xlsx file provided to test file uploading
+7. You can register and use `demo.xlsx` file provided to test file uploading
 
 ### Launch with Docker
 
