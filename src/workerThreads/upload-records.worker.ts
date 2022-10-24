@@ -1,6 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { workerData, parentPort } from "worker_threads";
-import { UploadService } from "../excel/services/upload.service";
+import { UploadService } from "../modules/records/services/upload.service";
 import { WorkerModule } from "../worker.module";
 
 async function run() {

@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { UploadService } from "./excel/services/upload.service";
+import { UploadService } from "./modules/records/services/upload.service";
 
 @Module({
   imports: [],

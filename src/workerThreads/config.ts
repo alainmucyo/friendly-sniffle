@@ -1,1 +1,1 @@
-export const workerThreadFilePath = __dirname + "/upload-excel.worker.js";
+export const workerThreadFilePath = __dirname + "/upload-records.worker.js";
